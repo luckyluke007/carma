@@ -180,13 +180,28 @@ gulp.task('buildImages', function() {
 });
 
 gulp.task('copyfiles', function() {
-   gulp.src('./*')
-   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio'));
+   gulp.src('**/*.php')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
 });
 
-gulp.task('copystyles', function() {
-   gulp.src('./assets/css/*')
-   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/assets/css'));
+gulp.task('copycss', function() {
+   gulp.src('**/*.css')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
+});
+
+gulp.task('copyjs', function() {
+   gulp.src('**/*.js')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
+});
+gulp.task('copyimages', function() {
+   gulp.src('**/*.jpg')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
+   gulp.src('**/*.gif')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
+   gulp.src('**/*.png')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
+   gulp.src('**/*.svg')
+   .pipe(gulp.dest('../carma/wp-content/themes/scg_studio/'));
 });
 
 // ==== TASKS ==== //
@@ -199,12 +214,12 @@ gulp.task('copystyles', function() {
 
 // Package Distributable Theme
 gulp.task('build', function(cb) {
-		runSequence('cleanup', 'styles', 'js', 'buildPhp', 'buildLibrary', 'buildAssets', 'buildImages', 'buildZip','cleanupFinal','copyfiles', 'copystyles', cb);
+		runSequence('cleanup', 'styles', 'js', 'buildPhp', 'buildLibrary', 'buildAssets', 'buildImages', 'buildZip','cleanupFinal','copyfiles', 'copycss', 'copyjs', 'copyimages', cb);
 });
 
 
 // Watch Task
-gulp.task('default', ['styles', 'browser-sync', 'copyfiles', 'copystyles'], function () {
+gulp.task('default', ['styles', 'browser-sync', 'copyfiles', 'copycss', 'copyjs', 'copyimages'], function () {
     gulp.watch(source+"sass/**/*.scss", ['styles']);
     gulp.watch(source+"js/vendor/**/*.js", ['js', browserSync.reload]);
 });
